@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hughes Realty — Kyle & Sarah Hughes | MN & WI Real Estate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F9F6F1; --cream-dark: #F0EBE3;
+    --slate: #4A6278; --slate-dark: #324557; --slate-light: #6B8EA8;
+    --slate-pale: #D6E4EE; --slate-mist: #EBF2F7;
+    --warm: #8B6F5C; --warm-light: #C4A898;
+    --text: #2C2C2C; --text-mid: #5A5A5A; --text-muted: #8A8A8A; --white: #FFFFFF;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Jost', system-ui, sans-serif;
+    --radius: 12px;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 48px;
+    background: rgba(249,246,241,0.93); backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(74,98,120,0.1); transition: box-shadow 0.3s;
+  }
+  .logo { display: flex; align-items: center; text-decoration: none; }
+  .logo img { height: 42px; width: auto; }
+  nav ul { display: flex; gap: 28px; list-style: none; align-items: center; }
+  nav ul a { font-size: 12px; font-weight: 400; letter-spacing: 0.08em; color: var(--text-mid); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  nav ul a:hover { color: var(--slate); }
+  .nav-cta { background: var(--slate) !important; color: var(--white) !important; padding: 9px 20px !important; border-radius: 4px !important; }
+  .nav-cta:hover { background: var(--slate-dark) !important; color: var(--white) !important; }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 55% 45%; }
+  .hero-left { position: relative; overflow: hidden; }
+  .hero-left img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+  .hero-left-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(25,38,50,0.82) 0%, rgba(25,38,50,0.2) 55%, transparent 100%); }
+  .hero-caption { position: absolute; bottom: 44px; left: 44px; right: 44px; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-light); margin-bottom: 14px; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+  .hero-tag::before { content: ''; width: 22px; height: 1px; background: var(--warm-light); }
+  .hero-caption h1 { font-family: var(--serif); font-size: clamp(36px, 4vw, 60px); font-weight: 500; line-height: 1.06; color: var(--white); letter-spacing: 0.01em; margin-bottom: 16px; opacity: 0; animation: fadeUp 0.8s 0.35s forwards; }
+  .hero-caption h1 em { font-style: italic; color: var(--slate-pale); }
+  .hero-caption p { font-size: 15px; font-weight: 300; line-height: 1.7; color: rgba(255,255,255,0.72); max-width: 400px; margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s 0.5s forwards; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.65s forwards; }
+  .btn-white { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--slate-dark); padding: 13px 26px; border-radius: 4px; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .btn-white:hover { background: var(--cream); transform: translateY(-1px); }
+  .btn-outline-white { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.4); color: var(--white); padding: 13px 26px; border-radius: 4px; font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: border-color 0.2s, background 0.2s; }
+  .btn-outline-white:hover { border-color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.08); }
+
+  .hero-right { background: var(--cream); display: flex; flex-direction: column; justify-content: center; padding: 100px 44px 60px; gap: 28px; }
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
+  .stat-card { background: var(--white); border-radius: var(--radius); padding: 22px 18px; border: 1px solid var(--cream-dark); transition: box-shadow 0.2s, transform 0.2s; }
+  .stat-card:hover { box-shadow: 0 8px 24px rgba(74,98,120,0.1); transform: translateY(-2px); }
+  .stat-number { font-family: var(--serif); font-size: 36px; font-weight: 500; color: var(--slate-dark); line-height: 1; margin-bottom: 5px; }
+  .stat-label { font-size: 11px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+
+  .hero-contact { background: var(--white); border-radius: var(--radius); padding: 22px; border: 1px solid var(--cream-dark); opacity: 0; animation: fadeUp 0.8s 0.55s forwards; }
+  .contact-label { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate); margin-bottom: 12px; }
+  .contact-links { display: flex; flex-direction: column; gap: 9px; }
+  .contact-link { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-mid); text-decoration: none; transition: color 0.2s; }
+  .contact-link:hover { color: var(--slate-dark); }
+  .contact-link svg { width: 15px; height: 15px; color: var(--slate); flex-shrink: 0; }
+
+  .areas-wrap { opacity: 0; animation: fadeUp 0.8s 0.7s forwards; }
+  .areas-label { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .areas-label::after { content: ''; flex: 1; height: 1px; background: var(--slate-pale); }
+  .area-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+  .area-pill { display: inline-flex; align-items: center; gap: 5px; background: var(--slate-mist); color: var(--slate-dark); padding: 6px 12px; border-radius: 100px; font-size: 12px; border: 1px solid var(--slate-pale); text-decoration: none; transition: background 0.2s; }
+  .area-pill:hover { background: var(--slate-pale); }
+  .area-pill::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--slate-light); flex-shrink: 0; }
+
+  /* TRUST BAR */
+  .trust-bar { background: var(--slate-dark); padding: 18px 48px; display: flex; align-items: center; justify-content: center; gap: 44px; flex-wrap: wrap; }
+  .trust-item { display: flex; align-items: center; gap: 9px; font-size: 12px; color: rgba(255,255,255,0.55); }
+  .trust-item svg { width: 15px; height: 15px; color: var(--warm-light); flex-shrink: 0; }
+
+  /* MEET */
+  .meet { padding: 100px 48px; max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .meet-img-wrap { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 24px 56px rgba(74,98,120,0.15); aspect-ratio: 4/5; }
+  .meet-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+  .meet-img-wrap::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 35%; background: linear-gradient(to top, rgba(32,45,58,0.55) 0%, transparent 100%); }
+  .meet-img-badge { position: absolute; bottom: 20px; left: 20px; z-index: 2; background: rgba(255,255,255,0.95); border-radius: 10px; padding: 12px 16px; backdrop-filter: blur(8px); }
+  .meet-badge-num { font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--slate-dark); line-height: 1; }
+  .meet-badge-text { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
+
+  .section-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .section-eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--slate); }
+  .section-title { font-family: var(--serif); font-size: clamp(30px, 3.5vw, 46px); font-weight: 500; line-height: 1.1; color: var(--slate-dark); letter-spacing: 0.01em; margin-bottom: 18px; }
+  .section-title em { font-style: italic; color: var(--slate); }
+  .section-body { font-size: 15px; font-weight: 300; line-height: 1.8; color: var(--text-mid); margin-bottom: 22px; }
+  .values-list { list-style: none; display: flex; flex-direction: column; gap: 11px; margin-bottom: 30px; }
+  .values-list li { display: flex; align-items: flex-start; gap: 11px; font-size: 14px; color: var(--text-mid); line-height: 1.5; }
+  .values-list li::before { content: ''; width: 19px; height: 19px; flex-shrink: 0; background: var(--slate-mist) url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l2.5 2.5L9 1' stroke='%234A6278' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center; border: 1px solid var(--slate-pale); border-radius: 50%; margin-top: 2px; }
+  .btn-slate { display: inline-flex; align-items: center; gap: 8px; background: var(--slate-dark); color: var(--white); padding: 13px 26px; border-radius: 4px; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .btn-slate:hover { background: var(--slate); transform: translateY(-1px); }
+
+  /* AREAS */
+  .expertise { background: var(--slate-dark); padding: 100px 48px; position: relative; overflow: hidden; }
+  .expertise::before { content: ''; position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(107,142,168,0.1) 0%, transparent 70%); pointer-events: none; }
+  .expertise-inner { max-width: 1100px; margin: 0 auto; }
+  .expertise .section-eyebrow { color: var(--warm-light); }
+  .expertise .section-eyebrow::before { background: var(--warm-light); }
+  .expertise .section-title { color: var(--white); margin-bottom: 44px; }
+  .areas-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .area-card { position: relative; border-radius: var(--radius); overflow: hidden; cursor: pointer; text-decoration: none; display: block; aspect-ratio: 3/4; transition: transform 0.3s; }
+  .area-card:hover { transform: translateY(-6px); }
+  .area-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .area-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(32,45,58,0.95) 0%, rgba(32,45,58,0.15) 60%, transparent 100%); opacity: 0.8; transition: opacity 0.3s; }
+  .area-card:hover .area-card-overlay { opacity: 1; }
+  .area-card-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 14px; }
+  .area-card-state { font-size: 10px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--warm-light); margin-bottom: 2px; }
+  .area-card-city { font-family: var(--serif); font-size: 20px; font-weight: 500; color: var(--white); line-height: 1.1; }
+  .area-card-desc { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; line-height: 1.4; }
+
+  /* TESTIMONIALS */
+  .testimonials { padding: 100px 48px; max-width: 1100px; margin: 0 auto; }
+  .testimonials-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 44px; }
+  .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .testimonial-card { background: var(--white); border: 1px solid var(--cream-dark); border-radius: 16px; padding: 28px; transition: box-shadow 0.2s, transform 0.2s; }
+  .testimonial-card:hover { box-shadow: 0 12px 32px rgba(74,98,120,0.1); transform: translateY(-3px); }
+  .testimonial-card.featured { background: var(--slate-dark); border-color: var(--slate-dark); }
+  .testimonial-card.featured .testimonial-text { color: rgba(255,255,255,0.8); }
+  .testimonial-card.featured .author-name { color: var(--white); }
+  .testimonial-card.featured .author-role { color: rgba(255,255,255,0.4); }
+  .testimonial-card.featured .stars { color: var(--warm-light); }
+  .stars { color: var(--warm); font-size: 13px; letter-spacing: 2px; margin-bottom: 14px; }
+  .testimonial-text { font-size: 15px; line-height: 1.75; color: var(--text-mid); margin-bottom: 22px; font-weight: 300; font-family: var(--serif); font-style: italic; }
+  .author-name { font-size: 14px; font-weight: 500; color: var(--text); }
+  .author-role { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  /* VALUATION */
+  .valuation { background: var(--cream-dark); padding: 100px 48px; text-align: center; position: relative; overflow: hidden; }
+  .valuation::before { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1400&q=40') center/cover; opacity: 0.05; }
+  .valuation-inner { max-width: 540px; margin: 0 auto; position: relative; }
+  .valuation .section-eyebrow { justify-content: center; }
+  .valuation .section-eyebrow::before { display: none; }
+  .valuation .section-title { margin-bottom: 14px; }
+  .valuation-body { font-size: 15px; font-weight: 300; line-height: 1.75; color: var(--text-mid); margin-bottom: 36px; }
+  .valuation-form { display: flex; background: var(--white); border-radius: 6px; border: 1px solid var(--cream-dark); overflow: hidden; box-shadow: 0 8px 24px rgba(74,98,120,0.1); }
+  .valuation-input { flex: 1; padding: 15px 18px; border: none; outline: none; font-family: var(--sans); font-size: 14px; font-weight: 300; background: transparent; color: var(--text); }
+  .valuation-input::placeholder { color: var(--text-muted); }
+  .valuation-btn { background: var(--slate-dark); color: var(--white); border: none; padding: 15px 24px; font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+  .valuation-btn:hover { background: var(--slate); }
+
+  /* YOUTUBE */
+  .youtube-section { padding: 100px 48px; max-width: 1100px; margin: 0 auto; }
+  .youtube-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 36px; }
+  .youtube-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 14px; }
+  .video-card { border-radius: var(--radius); overflow: hidden; background: var(--white); border: 1px solid var(--cream-dark); text-decoration: none; color: inherit; display: block; transition: transform 0.2s, box-shadow 0.2s; }
+  .video-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(74,98,120,0.1); }
+  .video-thumb { position: relative; background: var(--slate-dark); aspect-ratio: 16/9; overflow: hidden; }
+  .video-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.85; transition: opacity 0.2s; }
+  .video-card:hover .video-thumb img { opacity: 1; }
+  .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 46px; height: 46px; background: rgba(255,255,255,0.92); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+  .video-card:hover .play-btn { transform: translate(-50%,-50%) scale(1.1); }
+  .play-btn svg { width: 15px; height: 15px; color: var(--slate-dark); margin-left: 3px; }
+  .video-info { padding: 14px; }
+  .video-title { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.4; margin-bottom: 4px; }
+  .video-meta { font-size: 11px; color: var(--text-muted); }
+  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--slate); text-decoration: none; transition: color 0.2s; }
+  .yt-link:hover { color: var(--slate-dark); }
+
+  /* NEIGHBORHOODS */
+  .neighborhoods { background: var(--slate-dark); padding: 100px 48px; }
+  .neighborhoods-inner { max-width: 1100px; margin: 0 auto; }
+  .neighborhoods .section-eyebrow { color: var(--warm-light); }
+  .neighborhoods .section-eyebrow::before { background: var(--warm-light); }
+  .neighborhoods .section-title { color: var(--white); margin-bottom: 44px; }
+  .neighborhood-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .neighborhood-card { border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; text-decoration: none; display: block; aspect-ratio: 4/3; transition: transform 0.3s; }
+  .neighborhood-card:hover { transform: scale(1.02); }
+  .neighborhood-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .neighborhood-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(32,45,58,0.9) 0%, rgba(32,45,58,0.1) 60%, transparent 100%); opacity: 0.75; transition: opacity 0.3s; }
+  .neighborhood-card:hover .neighborhood-overlay { opacity: 1; }
+  .neighborhood-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 18px; }
+  .neighborhood-state { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--warm-light); margin-bottom: 2px; }
+  .neighborhood-name { font-family: var(--serif); font-size: 24px; font-weight: 500; color: var(--white); margin-bottom: 6px; }
+  .neighborhood-cta { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); transition: color 0.2s; }
+  .neighborhood-card:hover .neighborhood-cta { color: var(--white); }
+
+  /* FAQ */
+  .faq { background: var(--cream-dark); padding: 100px 48px; }
+  .faq-inner { max-width: 700px; margin: 0 auto; }
+  .faq .section-eyebrow { justify-content: center; }
+  .faq .section-eyebrow::before { display: none; }
+  .faq .section-title { text-align: center; margin-bottom: 44px; }
+  .faq-list { display: flex; flex-direction: column; gap: 2px; }
+  .faq-item { background: var(--white); border-radius: 8px; overflow: hidden; border: 1px solid var(--cream-dark); }
+  .faq-question { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; background: none; border: none; cursor: pointer; font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--text); text-align: left; gap: 14px; transition: color 0.2s; }
+  .faq-question:hover { color: var(--slate); }
+  .faq-icon { width: 18px; height: 18px; flex-shrink: 0; color: var(--slate); transition: transform 0.3s; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .faq-item.open .faq-answer { max-height: 200px; }
+  .faq-answer-inner { padding: 0 22px 18px; font-size: 14px; font-weight: 300; line-height: 1.75; color: var(--text-mid); }
+
+  /* CTA */
+  .cta-strip { background: var(--slate); padding: 72px 48px; text-align: center; }
+  .cta-strip h2 { font-family: var(--serif); font-size: clamp(28px, 3vw, 44px); font-weight: 500; color: var(--white); margin-bottom: 10px; }
+  .cta-strip p { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.62); margin-bottom: 32px; }
+  .cta-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer { background: var(--slate-dark); padding: 52px 48px 28px; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 44px; margin-bottom: 44px; }
+  .footer-brand img { height: 38px; margin-bottom: 14px; filter: brightness(0) invert(1); opacity: 0.75; }
+  .footer-brand p { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.4); line-height: 1.7; max-width: 230px; }
+  .footer-col-title { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 14px; }
+  .footer-links-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .footer-links-list a { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.48); text-decoration: none; transition: color 0.2s; }
+  .footer-links-list a:hover { color: var(--white); }
+  .footer-bottom { padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.22); }
+  .footer-legal { display: flex; gap: 20px; }
+  .footer-legal a { font-size: 12px; color: rgba(255,255,255,0.22); text-decoration: none; transition: color 0.2s; }
+  .footer-legal a:hover { color: rgba(255,255,255,0.5); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 960px) {
+    nav { padding: 14px 20px; }
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { min-height: 70vh; }
+    .hero-right { padding: 40px 20px 56px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .meet { grid-template-columns: 1fr; padding: 60px 20px; gap: 36px; }
+    .expertise, .neighborhoods { padding: 60px 20px; }
+    .areas-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonials { padding: 60px 20px; }
+    .testimonials-header { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .valuation, .faq { padding: 60px 20px; }
+    .youtube-section { padding: 60px 20px; }
+    .youtube-header { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .youtube-grid { grid-template-columns: 1fr; }
+    .neighborhood-grid { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    .cta-actions { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#" class="logo">
+    <img src="https://lirp.cdn-website.com/a933d1a5/dms3rep/multi/opt/HughesRealty_Logo_Final_Color-1920w.png" alt="Hughes Realty">
+  </a>
+  <ul>
+    <li><a href="#meet">About</a></li>
+    <li><a href="#expertise">Areas</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#neighborhoods">Guides</a></li>
+    <li><a href="#youtube">YouTube</a></li>
+    <li><a href="#valuation" class="nav-cta">Home Value</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — real photo of Kyle & Sarah -->
+<section class="hero">
+  <div class="hero-left">
+    <img src="https://lirp.cdn-website.com/a933d1a5/dms3rep/multi/opt/Sarah%2B-26%2BKyle%2BHughes-1920w.png" alt="Sarah and Kyle Hughes, Realtors">
+    <div class="hero-left-overlay"></div>
+    <div class="hero-caption">
+      <div class="hero-tag">Minnesota & Wisconsin</div>
+      <h1>Find your<br>place to<br><em>call home</em></h1>
+      <p>Kyle and Sarah Hughes bring 24+ years of combined expertise and genuine care to every transaction across the MN/WI region.</p>
+      <div class="hero-actions">
+        <a href="#meet" class="btn-white">Meet Kyle & Sarah</a>
+        <a href="#valuation" class="btn-outline-white">Get Home Value</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="stat-card"><div class="stat-number">24+</div><div class="stat-label">Years combined</div></div>
+      <div class="stat-card"><div class="stat-number">5</div><div class="stat-label">Communities</div></div>
+      <div class="stat-card"><div class="stat-number">2</div><div class="stat-label">States licensed</div></div>
+      <div class="stat-card"><div class="stat-number">98%</div><div class="stat-label">Repeat & referred</div></div>
+    </div>
+    <div class="hero-contact">
+      <div class="contact-label">Reach Kyle & Sarah directly</div>
+      <div class="contact-links">
+        <a href="tel:5125711762" class="contact-link">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 2h3l1.5 3.5-1.5 1a9 9 0 004 4l1-1.5 3.5 1.5v3A1.5 1.5 0 0113 15 12 12 0 011 3a1.5 1.5 0 011.5-1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          (512) 571-1762
+        </a>
+        <a href="mailto:Kyle@Hughes-Realty.com" class="contact-link">
+          <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M2 5l6 4 6-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Kyle@Hughes-Realty.com
+        </a>
+        <a href="mailto:Sarah@Hughes-Realty.com" class="contact-link">
+          <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M2 5l6 4 6-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Sarah@Hughes-Realty.com
+        </a>
+      </div>
+    </div>
+    <div class="areas-wrap">
+      <div class="areas-label">We serve</div>
+      <div class="area-pills">
+        <a href="#neighborhoods" class="area-pill">Woodbury, MN</a>
+        <a href="#neighborhoods" class="area-pill">Stillwater, MN</a>
+        <a href="#neighborhoods" class="area-pill">Hudson, WI</a>
+        <a href="#neighborhoods" class="area-pill">River Falls, WI</a>
+        <a href="#neighborhoods" class="area-pill">New Richmond, WI</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-item"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l1.8 3.6 4 .6-2.9 2.8.7 4L8 10l-3.6 1.9.7-4L2.2 5.2l4-.6L8 1z"/></svg> 24+ years combined experience</div>
+  <div class="trust-item"><svg viewBox="0 0 16 16" fill="none"><path d="M8 2a6 6 0 100 12A6 6 0 008 2z" stroke="currentColor" stroke-width="1.3"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Almost entirely repeat & referred clients</div>
+  <div class="trust-item"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="3" stroke="currentColor" stroke-width="1.3"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Licensed in MN & WI</div>
+  <div class="trust-item"><svg viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Buyers & sellers welcome</div>
+</div>
+
+<!-- MEET — real bio from their site -->
+<section class="meet" id="meet">
+  <div class="meet-img-wrap">
+    <img src="https://lirp.cdn-website.com/a933d1a5/dms3rep/multi/opt/Sarah%2B-26%2BKyle%2BHughes-1920w.png" alt="Kyle and Sarah Hughes">
+    <div class="meet-img-badge">
+      <div class="meet-badge-num">24+</div>
+      <div class="meet-badge-text">Years of expertise</div>
+    </div>
+  </div>
+  <div>
+    <div class="section-eyebrow">Meet the team</div>
+    <h2 class="section-title">Kyle & Sarah<br><em>Hughes</em></h2>
+    <p class="section-body">As top agents across Texas, Minnesota and Wisconsin, Kyle and Sarah are an energetic husband-wife team committed to providing their clients with the very best service available. Both are hardworking, dedicated, and deeply knowledgeable REALTORS®.</p>
+    <p class="section-body">Having built their business on a foundation of honesty and integrity, the couple truly care about the well-being of their clients. Almost the entirety of their business is based on repeat and referred clients — a true testament to the exceptional service they provide.</p>
+    <ul class="values-list">
+      <li>Expert negotiation skills and intelligent marketing strategies</li>
+      <li>Maximum exposure for listings, netting clients top dollar on the sale</li>
+      <li>Always available and communicative — even when there's nothing to update</li>
+      <li>Genuine advocates for both buyers and sellers alike</li>
+    </ul>
+    <a href="https://www.hughes-realty.com/kyleandsarah" class="btn-slate">Read our full story</a>
+  </div>
+</section>
+
+<!-- AREAS OF EXPERTISE -->
+<section class="expertise" id="expertise">
+  <div class="expertise-inner">
+    <div class="section-eyebrow">Where we work</div>
+    <h2 class="section-title">Areas of expertise</h2>
+    <div class="areas-grid">
+      <a href="#neighborhoods" class="area-card">
+        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&q=80" alt="Woodbury MN">
+        <div class="area-card-overlay"></div>
+        <div class="area-card-content"><div class="area-card-state">Minnesota</div><div class="area-card-city">Woodbury</div><div class="area-card-desc">Top-ranked schools & family neighborhoods</div></div>
+      </a>
+      <a href="#neighborhoods" class="area-card">
+        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=400&q=80" alt="Stillwater MN">
+        <div class="area-card-overlay"></div>
+        <div class="area-card-content"><div class="area-card-state">Minnesota</div><div class="area-card-city">Stillwater</div><div class="area-card-desc">Historic charm on the St. Croix River</div></div>
+      </a>
+      <a href="#neighborhoods" class="area-card">
+        <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=400&q=80" alt="Hudson WI">
+        <div class="area-card-overlay"></div>
+        <div class="area-card-content"><div class="area-card-state">Wisconsin</div><div class="area-card-city">Hudson</div><div class="area-card-desc">Vibrant rivertown with a welcoming feel</div></div>
+      </a>
+      <a href="#neighborhoods" class="area-card">
+        <img src="https://images.unsplash.com/photo-1449844908441-8829872d2607?w=400&q=80" alt="River Falls WI">
+        <div class="area-card-overlay"></div>
+        <div class="area-card-content"><div class="area-card-state">Wisconsin</div><div class="area-card-city">River Falls</div><div class="area-card-desc">College town with small-city character</div></div>
+      </a>
+      <a href="#neighborhoods" class="area-card">
+        <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=400&q=80" alt="New Richmond WI">
+        <div class="area-card-overlay"></div>
+        <div class="area-card-content"><div class="area-card-state">Wisconsin</div><div class="area-card-city">New Richmond</div><div class="area-card-desc">Growing community with rural roots</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS — real reviews from their site -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-header">
+    <div>
+      <div class="section-eyebrow">What clients say</div>
+      <h2 class="section-title">Trusted by<br><em>families across MN & WI</em></h2>
+    </div>
+    <a href="https://www.hughes-realty.com/testimonials52c68760" class="yt-link">All reviews →</a>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial-card featured">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"We are so blessed to have Kyle and Sarah on our side. They are by far the best realtors I have worked with — they go above and beyond, showing you they really care about finding the right house for you."</p>
+      <div class="author-name">Mai B.</div><div class="author-role">Buyer</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Couldn't have asked for a better team to sell our home — and we did it remotely. They were there every step of the way. Professional but still very warm, always available, always keeping in touch."</p>
+      <div class="author-name">Lisa F.</div><div class="author-role">Seller</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"I appreciate you showing me all my options — leasing or buying. Thank you for catching things in my lease that should not have been there. I will definitely need your help when I decide to buy."</p>
+      <div class="author-name">Marie T.</div><div class="author-role">Client</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOME VALUATION -->
+<section class="valuation" id="valuation">
+  <div class="valuation-inner">
+    <div class="section-eyebrow">Free home valuation</div>
+    <h2 class="section-title">What is your<br>home worth?</h2>
+    <p class="valuation-body">Get a free, no-obligation home valuation from Kyle and Sarah. Enter your address and they'll prepare a detailed market analysis within 24 hours.</p>
+    <div class="valuation-form">
+      <input type="text" class="valuation-input" placeholder="Enter your home address...">
+      <button class="valuation-btn">Get my value</button>
+    </div>
+  </div>
+</section>
+
+<!-- YOUTUBE -->
+<section class="youtube-section" id="youtube">
+  <div class="youtube-header">
+    <div>
+      <div class="section-eyebrow">On YouTube</div>
+      <h2 class="section-title">Watch & learn about<br><em>our communities</em></h2>
+    </div>
+    <a href="https://www.youtube.com/@hughesrealty/videos" target="_blank" class="yt-link">Visit our channel →</a>
+  </div>
+  <div class="youtube-grid">
+    <a href="https://www.youtube.com/@hughesrealty/videos" target="_blank" class="video-card">
+      <div class="video-thumb">
+        <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=700&q=80" alt="Stillwater MN">
+        <div class="play-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5l9 4.5-9 4.5V3.5z"/></svg></div>
+      </div>
+      <div class="video-info"><div class="video-title">Living in Stillwater, MN — Everything You Need to Know Before Moving</div><div class="video-meta">Hughes Realty</div></div>
+    </a>
+    <a href="https://www.youtube.com/@hughesrealty/videos" target="_blank" class="video-card">
+      <div class="video-thumb">
+        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&q=80" alt="Hudson WI">
+        <div class="play-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5l9 4.5-9 4.5V3.5z"/></svg></div>
+      </div>
+      <div class="video-info"><div class="video-title">Hudson, WI Neighborhood Guide 2025</div><div class="video-meta">Hughes Realty</div></div>
+    </a>
+    <a href="https://www.youtube.com/@hughesrealty/videos" target="_blank" class="video-card">
+      <div class="video-thumb">
+        <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=400&q=80" alt="Market Update">
+        <div class="play-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5l9 4.5-9 4.5V3.5z"/></svg></div>
+      </div>
+      <div class="video-info"><div class="video-title">MN/WI Real Estate Market Update — Spring 2025</div><div class="video-meta">Hughes Realty</div></div>
+    </a>
+  </div>
+</section>
+
+<!-- NEIGHBORHOOD GUIDES -->
+<section class="neighborhoods" id="neighborhoods">
+  <div class="neighborhoods-inner">
+    <div class="section-eyebrow">Neighborhood guides</div>
+    <h2 class="section-title">Explore your<br><em>future community</em></h2>
+    <div class="neighborhood-grid">
+      <a href="#" class="neighborhood-card"><img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80" alt="Woodbury MN"><div class="neighborhood-overlay"></div><div class="neighborhood-content"><div class="neighborhood-state">Minnesota</div><div class="neighborhood-name">Woodbury</div><div class="neighborhood-cta">Explore guide →</div></div></a>
+      <a href="#" class="neighborhood-card"><img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80" alt="Stillwater MN"><div class="neighborhood-overlay"></div><div class="neighborhood-content"><div class="neighborhood-state">Minnesota</div><div class="neighborhood-name">Stillwater</div><div class="neighborhood-cta">Explore guide →</div></div></a>
+      <a href="#" class="neighborhood-card"><img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=600&q=80" alt="Hudson WI"><div class="neighborhood-overlay"></div><div class="neighborhood-content"><div class="neighborhood-state">Wisconsin</div><div class="neighborhood-name">Hudson</div><div class="neighborhood-cta">Explore guide →</div></div></a>
+      <a href="#" class="neighborhood-card"><img src="https://images.unsplash.com/photo-1449844908441-8829872d2607?w=600&q=80" alt="River Falls WI"><div class="neighborhood-overlay"></div><div class="neighborhood-content"><div class="neighborhood-state">Wisconsin</div><div class="neighborhood-name">River Falls</div><div class="neighborhood-cta">Explore guide →</div></div></a>
+      <a href="#" class="neighborhood-card"><img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=600&q=80" alt="New Richmond WI"><div class="neighborhood-overlay"></div><div class="neighborhood-content"><div class="neighborhood-state">Wisconsin</div><div class="neighborhood-name">New Richmond</div><div class="neighborhood-cta">Explore guide →</div></div></a>
+      <a href="https://www.hughes-realty.com/contact" class="neighborhood-card" style="background:var(--slate);"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:28px;text-align:center;"><div><div style="font-family:var(--serif);font-size:22px;color:var(--white);margin-bottom:10px;line-height:1.2;">Not sure <em>which area?</em></div><div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;line-height:1.6;">Let Kyle & Sarah help you find the perfect community for your family.</div><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm-light);">Get in touch →</span></div></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="section-eyebrow">FAQs</div>
+    <h2 class="section-title">Common questions</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Do you work with both buyers and sellers?<svg class="faq-icon" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes — Kyle and Sarah work with both buyers and sellers across all five MN/WI communities. Whether you're purchasing your first home or selling, you'll have the full Hughes Realty team advocating for you.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">How does the free home valuation work?<svg class="faq-icon" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Enter your address above and Kyle or Sarah will prepare a comprehensive comparative market analysis within 24 hours — completely free, no obligation. They look at recent sales, current listings, and market trends specific to your neighborhood.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Can you help if I'm relocating from out of state?<svg class="faq-icon" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Absolutely. Kyle and Sarah have extensive experience helping out-of-state buyers navigate the process remotely — virtual tours, handling logistics on your behalf, and keeping you informed every step of the way.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">What areas of MN and WI do you cover?<svg class="faq-icon" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Hughes Realty primarily serves Woodbury and Stillwater in Minnesota, and Hudson, River Falls, and New Richmond in Wisconsin. If you're in a neighboring community, reach out — they're happy to discuss whether they're the right fit.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">What makes Hughes Realty different?<svg class="faq-icon" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Almost their entire business comes from repeat clients and referrals — which speaks for itself. Kyle and Sarah treat every purchase with the respect it deserves, with expert negotiation skills and a genuine commitment to finding the right outcome for every family.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <h2>Ready to make your move?</h2>
+  <p>Whether you're buying, selling, or just starting to explore — let's talk.</p>
+  <div class="cta-actions">
+    <a href="tel:5125711762" class="btn-white">Call (512) 571-1762</a>
+    <a href="https://www.hughes-realty.com/contact" class="btn-outline-white">Send a message</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img src="https://lirp.cdn-website.com/a933d1a5/dms3rep/multi/opt/HughesRealty_Logo_Final_Color-1920w.png" alt="Hughes Realty">
+      <p>Kyle and Sarah Hughes — helping families find their place to call home across Minnesota and Wisconsin.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Pages</div>
+      <ul class="footer-links-list">
+        <li><a href="#meet">About Us</a></li>
+        <li><a href="#expertise">Areas</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#valuation">Home Valuation</a></li>
+        <li><a href="#faq">FAQs</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Communities</div>
+      <ul class="footer-links-list">
+        <li><a href="#">Woodbury, MN</a></li>
+        <li><a href="#">Stillwater, MN</a></li>
+        <li><a href="#">Hudson, WI</a></li>
+        <li><a href="#">River Falls, WI</a></li>
+        <li><a href="#">New Richmond, WI</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links-list">
+        <li><a href="tel:5125711762">(512) 571-1762</a></li>
+        <li><a href="mailto:Kyle@Hughes-Realty.com">Kyle@Hughes-Realty.com</a></li>
+        <li><a href="mailto:Sarah@Hughes-Realty.com">Sarah@Hughes-Realty.com</a></li>
+        <li><a href="https://www.youtube.com/@hughesrealty/videos" target="_blank">YouTube Channel</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Hughes Realty. All rights reserved.</div>
+    <div class="footer-legal">
+      <a href="https://www.hughes-realty.com/disclosures">Disclosures</a>
+      <a href="https://www.searchaustinrealty.com/privacy">Privacy Policy</a>
+      <a href="https://www.searchaustinrealty.com/privacy">Fair Housing</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').style.boxShadow = window.scrollY > 20 ? '0 2px 20px rgba(74,98,120,0.1)' : 'none';
+  });
+</script>
+</body>
+</html>
